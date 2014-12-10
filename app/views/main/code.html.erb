@@ -1,0 +1,119 @@
+<h1>Code Explanation</h1>
+<style>
+pre, table, tr, td, span {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	display: table;
+	border-collapse: separate;
+	-webkit-border-horizontal-spacing: 2px;
+	-webkit-border-vertical-spacing: 2px;
+	border-top-color: gray;
+}
+pre {
+	font-family: monospace;
+	white-space: pre;
+	margin-top: 1em;
+	margin-right: 0px;
+	display: block;
+}
+</style>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<table>
+<tr>
+<td>
+<pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
+</td>
+<td>
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #888888"># Rule30 Cellular Automata</span>
+<span style="color: #888888"># Michael Trimm</span>
+<span style="color: #888888"># Created on: 2014-12-10 08:45AM</span>
+<span style="color: #888888"># Updated on: 2014-12-10 09:31AM</span>
+
+<span style="color: #888888"># Setup some basic params, rule30, with 20 steps, and with a single cell</span>
+rule, steps, cells <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">30</span>, <span style="color: #0000DD; font-weight: bold">20</span>, <span style="background-color: #fff0f0">&#39;1&#39;</span>
+
+<span style="color: #888888"># set how wide the base of the triangle is going to be</span>
+size <span style="color: #333333">=</span> steps <span style="color: #333333">+</span> cells<span style="color: #333333">.</span>size <span style="color: #333333">+</span> steps
+
+<span style="color: #888888"># place 0 padding arround the cell size equally on both sides</span>
+line <span style="color: #333333">=</span> cells<span style="color: #333333">.</span>center(size, <span style="background-color: #fff0f0">&#39;0&#39;</span>)
+<span style="color: #888888"># eg. 00000000000000000000100000000000000000000 </span>
+<span style="color: #888888"># 		for &#39;1&#39; &amp; size = 41 (20 + 1 + 20)</span>
+
+pretty <span style="color: #333333">=</span> <span style="color: #003388; font-weight: bold">true</span>
+
+<span style="color: #888888"># iterate over the number of steps</span>
+steps<span style="color: #333333">.</span>times <span style="color: #008800; font-weight: bold">do</span> 
+	<span style="color: #888888"># pretty print the line before it gets mutated in the next generation</span>
+	<span style="color: #007020">puts</span> (pretty) ? line<span style="color: #333333">.</span>tr(<span style="background-color: #fff0f0">&#39;01&#39;</span>, <span style="background-color: #fff0f0">&#39; X&#39;</span>) : line
+
+	<span style="color: #888888"># the cell size needs to widen in order to make the triangle, let&#39;s do it</span>
+	widened <span style="color: #333333">=</span> line<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span>,<span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">]</span> <span style="color: #333333">+</span> line <span style="color: #333333">+</span> line<span style="color: #333333">[-</span><span style="color: #0000DD; font-weight: bold">1</span>,<span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">]</span>
+	<span style="color: #888888"># concats the left and right value appropriately to the origin line value</span>
+	<span style="color: #888888"># the new width is going to size + 2, in this case, 44</span>
+
+	<span style="color: #888888"># iterate over the characters in the line and mutate each member</span>
+	<span style="color: #888888"># limit to the size (42) to remove excesssive characters</span>
+	line <span style="color: #333333">=</span> (<span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">.</span>.size)<span style="color: #333333">.</span>map { <span style="color: #333333">|</span>i<span style="color: #333333">|</span>
+		<span style="color: #888888"># Long Hand Notation</span>
+		w <span style="color: #333333">=</span> widened<span style="color: #333333">[</span>i,<span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">]</span> <span style="color: #888888"># position plus 2 chars after</span>
+		z <span style="color: #333333">=</span> w<span style="color: #333333">.</span>to_i(<span style="color: #0000DD; font-weight: bold">2</span>) <span style="color: #888888"># int value from base 2 binary value</span>
+		x <span style="color: #333333">=</span> rule<span style="color: #333333">[</span>z<span style="color: #333333">]</span> <span style="color: #888888"># value of the rule at that intereger index</span>
+		<span style="color: #888888"># set that to the value of the index within the string </span>
+
+		<span style="color: #888888"># Short Hand Notation</span>
+		rule<span style="color: #333333">[</span>widened<span style="color: #333333">[</span>i,<span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">].</span>to_i(<span style="color: #0000DD; font-weight: bold">2</span>)<span style="color: #333333">]</span>
+	}<span style="color: #333333">.</span>join  <span style="color: #888888"># combine the individual mutated values together into</span>
+			<span style="color: #888888"># 	a string and assign as the new value of the line</span>
+<span style="color: #008800; font-weight: bold">end</span> <span style="color: #888888"># /end</span>
+</pre></td></tr></table></div>

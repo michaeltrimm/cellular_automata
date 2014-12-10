@@ -1,0 +1,102 @@
+<h1>Compute Manifest</h1>
+<form role="form" class="form-horizontal">
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="rule">Rule</label>
+		<div class="col-sm-10">
+			<input type="number" class="form-control" id="rule" name="rule" value="30" min="1" max="256" maxlength="3"/>
+			<small>Min: 1<br>Max: 256<br>Default: 30</small>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="steps">Steps</label>
+		<div class="col-sm-10">
+			<input type="number" class="form-control" id="steps" name="steps" value="20" min="1" max="100" maxlength="3"/>
+			<small>Min: 1<br>Max: 100<br>Default: 20</small>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="cells">Cells</label>
+		<div class="col-sm-10">
+			<input type="number" class="form-control" id="cells" name="cells" value="1" min="0" max="1" maxlength="1"/>
+			<small>Min: 0<br>Max: 1<br>Default: 1</small>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="pretty">Pretty Print</label>
+		<div class="col-sm-10">
+			<div class="radio">
+				<label for="pretty0">
+					<input type="radio" name="pretty" id="pretty0" value="no">
+					No, display binary
+			  	</label>
+			</div>
+			<div class="radio">
+				<label for="pretty1">
+					<input type="radio" name="pretty" id="pretty1" value="yes" checked="checked">
+					Yes, display Xs
+			  	</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<input type="button" id="compute" class="btn btn-lg btn-success" value="Compute" />
+		</div>
+	</div>
+</form>
+<div id="results" class="hide">
+	<h1>Results</h1>
+	<pre id="output">
+	
+	</pre>
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		$("#compute").mouseup(function(){
+			var $btn = $(this);
+			$btn.prop("disabled",true);
+			var error = false;
+			if($("#rule").val() > 256){
+				$("#rule").closest(".form-group").addClass("has-error");
+				error = true;
+			} // if
+			 
+			if($("#steps").val() > 100){
+				$("#steps").closest(".form-group").addClass("has-error");
+				error = true;
+			} // if
+			
+			if($("#cells").val() > 1 || $("#cells").val() < 0){
+				$("#cells").closest(".form-group").addClass("has-error");
+				error = true;
+			} // if
+			
+			if(error == false){
+				$.post("/compute.json", {
+					rule: $("#rule").val(),
+					steps: $("#steps").val(),
+					cells: $("#cells").val(),
+					pretty: $("input[name=pretty]:checked").val()
+				}, function(e){
+					console.log(e);
+					$("#results").removeClass("hide");
+					$("#output").html(e.output);
+					$btn.prop("disabled",false);
+				}).fail(function(e){
+					console.log(e);
+					$btn.prop("disabled",false);
+					alert("Failed to compute. Check logs.");
+				}); // post
+			} else {
+				alert("Please fix the highlighted errors");
+			} // if-else
+			
+		}); // mouseup
+		
+	}); // function
+</script>
