@@ -60,6 +60,11 @@
 		$("#compute").mouseup(function(){
 			var $btn = $(this);
 			$btn.prop("disabled",true);
+			
+			$("#rule").closest(".form-group").removeClass("has-error");
+			$("#steps").closest(".form-group").removeClass("has-error");
+			$("#cells").closest(".form-group").removeClass("has-error");
+			
 			var error = false;
 			if(!$.isNumeric($("#rule").val()) || $("#rule").val() > 256){
 				$("#rule").closest(".form-group").addClass("has-error");
