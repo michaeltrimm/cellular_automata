@@ -61,17 +61,17 @@
 			var $btn = $(this);
 			$btn.prop("disabled",true);
 			var error = false;
-			if(!$("#rule").val().match(/^\d+$/) && $("#rule").val() > 256){
+			if(!$.isNumeric($("#rule").val()) || $("#rule").val() > 256){
 				$("#rule").closest(".form-group").addClass("has-error");
 				error = true;
 			} // if
 			 
-			if(!$("#steps").val().match(/^\d+$/) && $("#steps").val() > 100){
+			if(!$.isNumeric($("#steps").val()) || $("#steps").val() > 100){
 				$("#steps").closest(".form-group").addClass("has-error");
 				error = true;
 			} // if
 			
-			if(!$("#cells").val().match(/^\d+$/) && $("#cells").val() > 1 || $("#cells").val() < 0){
+			if(!$.isNumeric($("#cells").val()) || $("#cells").val() > 1 || $("#cells").val() < 0){
 				$("#cells").closest(".form-group").addClass("has-error");
 				error = true;
 			} // if
