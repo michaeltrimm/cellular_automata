@@ -1,28 +1,18 @@
-== README
+# Cellular Automata
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[Cellular Automata on Wolfram](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html)
 
-Things you may want to cover:
+- No database
+- Rails 4.1.5
+- Ruby 2.1.2p95
+- Uses Bootstrap 3.3.1 UI [Website](http://getbootstrap.com)
+- Uses jQuery 1.11.1 [Website](http://jquery.com)
 
-* Ruby version
+## To start: 
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+	git clone git@github.com:michaeltrimm/cellular_automata.git
+	cd cellular_automata
+	bundle install
+	rails s -p 3001
+	
+On your computer, go to: `http://localhost:3001/` to begin
